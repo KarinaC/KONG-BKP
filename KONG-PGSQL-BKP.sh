@@ -2,12 +2,19 @@
 # Script para backup de kong-postgres 
 
 # Parametros
-KONGPGSLQ=26306baf429b
-#host
-#slaveID
-
 # 1 - curl para traer el serve donde corre y el slaveID
-curl   http://localhost:18082/v2/apps/infrastructure/kong-pgsql/tasks
+#lo comento porque es local en mi maquina
+###curle=$(curl   http://localhost:18082/v2/apps/infrastructure/kong-pgsql/tasks)
+
+#curle para hacer desde qa
+curle=$(curl marathon.mesos:8080/v2/apps/infrastructure/kong-pgsql/tasks)
+# obtener el host
+echo $curle | jq '.tasks[0].host'
+
+#obtener el slaveID
+echo $curle | jq '.tasks[0].slaveId'
+
+
 
 # 2 - logueamos a la maquina donde corre
 
@@ -20,5 +27,7 @@ curl   http://localhost:18082/v2/apps/infrastructure/kong-pgsql/tasks
 ##IMPORTANTE
 ##DESA >> CORRI COMO PSEUDO-ROOT - SUDO BASH... ver que onda en cada ambiente
 docker exec -t $KONGPGSLQ pg_dumpall -c -U postgres > /data/kong/postgresql/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+
+
 
 
