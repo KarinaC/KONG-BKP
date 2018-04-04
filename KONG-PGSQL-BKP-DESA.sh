@@ -25,11 +25,12 @@ CONTAINER=$( ssh -t -o LogLevel=QUIET $HOSTIP sudo docker ps | grep lapp-dvde004
 # Doing the BACKUP
 ###################
 
-ssh -t -o LogLevel=QUIET $HOSTIP "echo 'The container ID is' $CONTAINER; sudo docker exec -t $CONTAINER pg_dumpall -c -U postgres > /data/kong/postgresql/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql"
+#ssh -t -o LogLevel=QUIET $HOSTIP "echo 'The container ID is' $CONTAINER; sudo docker exec -t $CONTAINER pg_dumpall -c -U postgres > /data/kong/postgresql/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql"
 
 #############################
 # Doing the BACKUP 2ndVERSION
 #############################
 
-ssh -t -o LogLevel=QUIET $HOSTIP "echo 'The container ID is' $CONTAINER; sudo docker run -it --rm --name "KONG-PGSQL-BKP" -v /opt/pgsql-bkp:/dump-bkp lapp-dvde004:5000/postgres:9.4 pd_dumpall -h hostname -c -U postgres gzip -9 > /dump-bkp/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql"
+ssh -t -o LogLevel=QUIET $HOSTIP "echo 'The container ID is' $CONTAINER; sudo docker run -it --rm --name "KONG-PGSQL-BKP" -v /opt/pgsql-bkp:/dump-bkp   --link $CONTAINER lapp-dvde004:5000/postgres:9.4 pg_dumpall -h $CONTAINER -c -U postgres > /dump-bkp/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql"
+
 
