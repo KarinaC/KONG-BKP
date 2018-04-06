@@ -11,7 +11,8 @@ and also make sure whatever user you use to execute this script needs to be adde
 
 #### How to use it
 Is very simple and does not need nothing more than to be execute
-```$ ./KONG-PGSQL-BKP-PROD.sh
+```
+$ ./KONG-PGSQL-BKP-PROD.sh
 ```
 
 #### Versioning
