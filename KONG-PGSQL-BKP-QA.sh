@@ -28,7 +28,7 @@ if [ -d "$OBPATH" ]; then
      echo "The BKP path exists, continue to backup task" >> $KONGBKPLOG
 else
      echo "The BKP path does not exists, it will be create and then move to the backup task" >> $KONGBKPLOG
-	         mkdir -p /home/etcconit/KONG-PGSQL-BACKUPS/OLDER-BACKUPS
+     mkdir -p /home/etcconit/KONG-PGSQL-BACKUPS/OLDER-BACKUPS
 fi
 
 
