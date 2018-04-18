@@ -17,10 +17,20 @@ KONGBKPLOG=/home/etcconit/KONG-PGSQL-BACKUPS/kong-bkp.log
 # Move logs to  other folder and REMOVE olders than 7 days
 ##########################################################
 
-OLDBKP=$( find $BKPPATH/dump_*.sql -type f -mtime -2 )
-echo "" > /home/etcconit/KONG-PGSQL-BACKUPS/kong-bkp.log
+echo " " > /home/etcconit/KONG-PGSQL-BACKUPS/kong-bkp.log
 echo "Starting the kong backup script for `date +%d-%m-%Y"_"%H_%M_%S`" >> $KONGBKPLOG
-ls -ltr  $OLDBKP >> $KONGBKPLOG
+
+#############################
+# Check if path exists or not
+#############################
+
+if [ -d "$OBPATH" ]; then
+     echo "The BKP path exists, continue to backup task" >> $KONGBKPLOG
+else
+     echo "The BKP path does not exists, it will be create and then move to the backup task" >> $KONGBKPLOG
+	         mkdir -p /home/etcconit/KONG-PGSQL-BACKUPS/OLDER-BACKUPS
+fi
+
 
 
 OLDBKP=$( find /home/etcconit/KONG-PGSQL-BACKUPS/dump_*.sql -type f -mtime -2 )
